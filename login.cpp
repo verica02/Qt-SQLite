@@ -10,7 +10,7 @@ login::login(QWidget *parent)
 
     myDb = QSqlDatabase::addDatabase("QSQLITE");
     myDb.setDatabaseName("C:/sqlite/database.db");
-    if(!myDb.open()){
+    if(!connOpen()){
         ui -> label -> setText("Database is not connected...");
     }else{
         ui -> label -> setText("Database is connected...");
@@ -29,12 +29,15 @@ QString username, password;
 username = ui -> lineEdit_username -> text();
 password = ui ->lineEdit_Password ->text();
 
-if(!myDb.isOpen()){
+if(!connOpen()){
     qDebug()<<"Failed to poen the database";
     return;
 }
+
 QSqlQuery qry;
-if(qry.exec(" select * from employee where username = '"+username+"' and password = '"+password+"'")){
+qry.prepare(" select * from employee where username = '"+username+"' and password = '"+password+"'");
+
+if(qry.exec()){
    int count = 0;
     while(qry.next()){
        count ++;
@@ -50,10 +53,13 @@ if(qry.exec(" select * from employee where username = '"+username+"' and passwor
         }
         else{
         ui -> label_2 -> setText("username and password is correct");
+        connClose();//close the connetion to the database and open a new window
+
         this -> hide();//it will hide the current page and open new page
         Dialog dialog;
         dialog.setModal(true);
         dialog.exec();
+
         }
     }
     if(count > 1){

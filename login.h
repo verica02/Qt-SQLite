@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QFileInfo>
 #include "dialog.h"
-//#include "dialog1.h"
+#include "dialog1.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class login; }
@@ -15,6 +15,7 @@ QT_END_NAMESPACE
 class login : public QMainWindow
 {
     Q_OBJECT
+
 
 public:
     QSqlDatabase myDb;
