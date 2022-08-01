@@ -19,6 +19,16 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_edit_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_load_clicked();
+
+    void on_pushButton_load_list_clicked();
+
+    void on_comboBox_currentTextChanged(const QString &arg1);
+
 private:
     Ui::Dialog *ui;
 };
