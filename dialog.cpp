@@ -164,3 +164,65 @@ void Dialog::on_comboBox_currentTextChanged(const QString &arg1)
      }
 }
 
+//table
+void Dialog::on_tableView_activated(const QModelIndex &index)
+{
+    QString val = ui -> tableView -> model() -> data(index).toString();
+    login conn;
+     if(!conn.connOpen()){
+         qDebug()<<"Failed to open the database";
+         return;
+     }
+     conn.connOpen();
+     QSqlQuery qry;
+     qry.prepare("select * from employee where eid = '"+val+"' or name = '"+val+"' or surname = '"+val+"' or age = '"+val+"'");
+//     eid = ui ->lineEdit_id -> text();
+//     name = ui ->lineEdit_name -> text();
+//     surname = ui ->lineEdit_surname -> text();
+//     age = ui ->lineEdit_age -> text();
+     if(qry.exec()){
+        while(qry.next()){
+          ui -> lineEdit_id -> setText(qry.value(0).toString());//0 for the first column id
+          ui -> lineEdit_name -> setText(qry.value(1).toString());
+          ui -> lineEdit_surname -> setText(qry.value(2).toString());
+          ui -> lineEdit_age -> setText(qry.value(3).toString());
+        }
+     conn.connClose();
+     }
+
+     else{
+         QMessageBox::information(this, tr("error::"),qry.lastError().text());
+     }
+}
+
+
+void Dialog::on_listView_activated(const QModelIndex &index)
+{
+    QString val = ui -> listView -> model() -> data(index).toString();
+    login conn;
+     if(!conn.connOpen()){
+         qDebug()<<"Failed to open the database";
+         return;
+     }
+     conn.connOpen();
+     QSqlQuery qry;
+     qry.prepare("select * from employee where eid = '"+val+"' or name = '"+val+"' or surname = '"+val+"' or age = '"+val+"'");
+//     eid = ui ->lineEdit_id -> text();
+//     name = ui ->lineEdit_name -> text();
+//     surname = ui ->lineEdit_surname -> text();
+//     age = ui ->lineEdit_age -> text();
+     if(qry.exec()){
+        while(qry.next()){
+          ui -> lineEdit_id -> setText(qry.value(0).toString());//0 for the first column id
+          ui -> lineEdit_name -> setText(qry.value(1).toString());
+          ui -> lineEdit_surname -> setText(qry.value(2).toString());
+          ui -> lineEdit_age -> setText(qry.value(3).toString());
+        }
+     conn.connClose();
+     }
+
+     else{
+         QMessageBox::information(this, tr("error::"),qry.lastError().text());
+     }
+}
+

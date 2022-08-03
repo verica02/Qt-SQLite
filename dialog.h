@@ -29,6 +29,10 @@ private slots:
 
     void on_comboBox_currentTextChanged(const QString &arg1);
 
+    void on_tableView_activated(const QModelIndex &index);
+
+    void on_listView_activated(const QModelIndex &index);
+
 private:
     Ui::Dialog *ui;
 };
